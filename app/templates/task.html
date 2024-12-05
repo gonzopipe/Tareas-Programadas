@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block content %}
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0; margin-top: 10px;">
+
+    <!-- Formulario para agregar tarea -->
+    <form method="POST" action="/add" style="display: flex; align-items: center; gap: 10px; flex-grow: 1;">
+        <input type="text" name="task" placeholder="Nueva tarea" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; flex-grow: 1;">
+        <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Agregar Tarea</button>
+    </form>
+
+    <!-- Botones de descarga -->
+    <div style="display: flex; gap: 10px; margin-top: -17px;">
+        <a href="/download/pdf" class="btn">Descargar PDF</a>
+        <a href="/download/excel" class="btn">Descargar Excel</a>
+    </div>
+</div>
+
+<div class="row">
+    {% for task in tasks %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Tarea {{ loop.index }}</h5>
+                <p class="card-text">{{ task.name }}</p>
+                <p class="card-text text-muted">Creada el: {{ task.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                <form method="POST" action="/delete/{{ task.id }}">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    
+    
+{% endblock %}
+
+
+
+[2]
